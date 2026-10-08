@@ -1,12 +1,12 @@
-import { CircleCheck, CreditCard } from 'lucide-react'
+import { CircleCheck } from 'lucide-react'
 import { dcb } from '../data/content.js'
-import BillCard from './BillCard.jsx'
+import NonDataProducts from './NonDataProducts.jsx'
 
 export default function DcbSection() {
   return (
     <section className="section" id={dcb.id} aria-labelledby="dcb-title">
       <div className="section-inner">
-        <div className="intro">
+        <div className="intro intro--solo">
           <div className="intro-copy" data-reveal>
             <p className="section-kicker">
               <span className="section-num">{dcb.number}</span>
@@ -23,18 +23,9 @@ export default function DcbSection() {
               ))}
             </ul>
           </div>
-          <div className="intro-visual" data-reveal="zoom">
-            <BillCard />
-          </div>
         </div>
 
-        <div className="callout" data-reveal>
-          <span className="callout-icon" aria-hidden="true">
-            <CreditCard size={22} />
-            <i />
-          </span>
-          <p>{dcb.setup}</p>
-        </div>
+        <NonDataProducts />
 
         <div className="block">
           <h3 className="block-title" data-reveal>

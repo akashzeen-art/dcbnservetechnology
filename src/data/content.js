@@ -1,20 +1,31 @@
 import {
   Activity,
+  BadgeCheck,
   BookHeadphones,
+  Bot,
+  CalendarClock,
   ChartColumn,
   ChartLine,
+  ChefHat,
   Clapperboard,
   Crosshair,
   Dumbbell,
   Gamepad2,
+  Gift,
   Globe,
+  Languages,
   Layers,
+  LayoutGrid,
+  MapPinned,
   Megaphone,
+  MessageCircleQuestion,
   MousePointerClick,
   PenLine,
+  Phone,
+  Rocket,
   ShoppingBag,
   Smartphone,
-  Sparkles,
+  Tags,
   Target,
   Trophy,
   Users,
@@ -27,8 +38,6 @@ export const dcb = {
   kicker: 'Payments',
   title: 'Direct Carrier Billing',
   text: 'Direct Carrier Billing (DCB) is an online mobile payment method that allows users to make purchases directly charged to their mobile phone bill or prepaid SIM card. DCB works across all mobile devices and is accessible to any user having a subscription or prepaid plan with a telecom operator.',
-  setup:
-    'No card? No problem. We provide the complete Direct Carrier Billing set-up. The best way to incorporate it is by targeting users with an active mobile subscription, giving them an alternative to credit and debit card payments.',
   highlights: ['Charged to the mobile bill', 'Works with prepaid SIM cards', 'Any mobile device'],
   steps: [
     {
@@ -63,6 +72,59 @@ export const dcb = {
       title: 'Measurable outcomes & performance tracking',
       text: 'Track every transaction and campaign with clear, measurable results.',
     },
+  ],
+}
+
+export const nonData = {
+  title: 'Products for non-data users',
+  text: 'Not every subscriber is online. Our USSD products bring AI assistance, content and rewards to any handset with a simple dial code: no app, no internet, and billed straight to the operator account.',
+  tags: ['No internet needed', 'Works on any phone', 'Operator billing'],
+  videos: [
+    {
+      id: 'ginnie',
+      label: 'AI Ginnie',
+      code: '*786#',
+      src: 'https://vz-a36f14d6-bf4.b-cdn.net/453e204c-ab78-4dd6-92b9-d54d7e4c5ee7/play_480p.mp4',
+    },
+    {
+      id: 'rewards',
+      label: 'Dial & win',
+      code: '*345#',
+      src: 'https://vz-a36f14d6-bf4.b-cdn.net/68681fe6-9e90-48fe-a80d-eb58a49a6dab/play_480p.mp4',
+    },
+  ],
+  product: {
+    name: 'AI Ginnie',
+    code: '*786#',
+    text: 'One friend shows another how easy it is: dial *786#, meet AI Ginnie and get helpful answers on health, learning, relationships and everyday life, right from the USSD menu.',
+  },
+  journey: [
+    { icon: Phone, title: 'Dial *786#', text: 'Open AI Ginnie from any handset with one short code.' },
+    { icon: Bot, title: 'Meet AI Ginnie', text: 'A friendly USSD menu introduces the assistant in seconds.' },
+    {
+      icon: LayoutGrid,
+      title: 'Pick a category',
+      text: 'Health, Wellness, Education, Relationships, Lifestyle and more.',
+    },
+    {
+      icon: MessageCircleQuestion,
+      title: 'Ask a real question',
+      text: 'A health query gets a clear, simple answer on the spot.',
+    },
+    {
+      icon: ChefHat,
+      title: 'Explore more',
+      text: 'Cooking tips, personal guidance, study help and wellness routines.',
+    },
+    { icon: CalendarClock, title: 'Choose a plan', text: 'Daily, weekly or monthly subscription options.' },
+    { icon: BadgeCheck, title: 'Billed & activated', text: 'Charged by the operator and activated instantly.' },
+    { icon: Gift, title: 'Get rewarded', text: 'Subscribers unlock gifts that keep them coming back.' },
+  ],
+  rewards: ['Motorcycle', 'Monthly bike', 'Smartphone', 'Cash', 'And more'],
+  custom: [
+    { icon: Tags, title: 'Flexible pricing' },
+    { icon: Languages, title: 'Localised categories' },
+    { icon: MapPinned, title: 'GEO & operator-based customisation' },
   ],
 }
 
@@ -128,12 +190,12 @@ export const marketing = {
     { icon: Crosshair, title: 'Ad Optimization', text: 'Advanced targeting and optimization techniques' },
     { icon: PenLine, title: 'Content Strategy', text: 'Data-driven content creation and distribution' },
     { icon: MousePointerClick, title: 'Conversion Optimization', text: 'Maximize ROI with proven conversion strategies' },
-    { icon: Sparkles, title: 'Brand Development', text: 'Build and strengthen your digital presence' },
-  ],
-  strategies: [
-    { icon: Globe, title: 'SEO', text: 'Boost online visibility and rank higher in search results.' },
-    { icon: PenLine, title: 'Content marketing', text: 'Attract potential customers with content they value.' },
-    { icon: Megaphone, title: 'Paid ads', text: 'Put your brand in front of the right audience, fast.' },
+    {
+      icon: Rocket,
+      title: 'Google, Meta & TikTok Ads',
+      text: 'Targeted paid campaigns that reach your audience where they search, scroll and watch',
+      platforms: ['Google Ads', 'Meta Ads', 'TikTok Ads'],
+    },
   ],
   outcomes: [
     { icon: Megaphone, title: 'Promote brands' },

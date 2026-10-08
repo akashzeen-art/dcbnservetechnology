@@ -88,27 +88,13 @@ export default function MarketingSection() {
                   </span>
                   <h4>{solution.title}</h4>
                   <p>{solution.text}</p>
-                </article>
-              )
-            })}
-          </div>
-        </div>
-
-        <div className="block">
-          <h3 className="block-title" data-reveal>
-            Strategies that boost visibility
-          </h3>
-          <div className="strategies">
-            {marketing.strategies.map((strategy, index) => {
-              const Icon = strategy.icon
-              return (
-                <article key={strategy.title} className="strategy" data-reveal style={{ '--i': index }}>
-                  <span className="strategy-num">{String(index + 1).padStart(2, '0')}</span>
-                  <span className="strategy-icon">
-                    <Icon size={26} />
-                  </span>
-                  <h4>{strategy.title}</h4>
-                  <p>{strategy.text}</p>
+                  {solution.platforms && (
+                    <ul className="solution-platforms">
+                      {solution.platforms.map((platform) => (
+                        <li key={platform}>{platform}</li>
+                      ))}
+                    </ul>
+                  )}
                 </article>
               )
             })}

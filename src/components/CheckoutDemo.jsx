@@ -18,7 +18,9 @@ function Store({ selected }) {
           <strong>StreamPlus</strong>
           <small>Premium · 1 month</small>
         </div>
-        <span className="co-price">₹99</span>
+        <span className="co-price">
+          <small>AED</small>19
+        </span>
       </div>
       <p className="co-label">Choose payment</p>
       <ul className="co-methods">
@@ -55,10 +57,10 @@ export default function CheckoutDemo() {
           <Smartphone size={20} />
         </span>
         <strong>Confirm payment</strong>
-        <p>₹99 will be charged to</p>
-        <span className="co-number">+91 98••• ••210</span>
+        <p>AED 19 will be charged to</p>
+        <span className="co-number">+971 50 ••• ••21</span>
         <small>Prepaid · your mobile operator</small>
-        <span className="co-btn is-ready is-pressed">Confirm ₹99</span>
+        <span className="co-btn is-ready is-pressed">Confirm AED 19</span>
       </div>
     )
   } else if (step === 3) {
@@ -75,7 +77,7 @@ export default function CheckoutDemo() {
           <Check size={26} strokeWidth={3} />
         </span>
         <strong>Payment successful</strong>
-        <p>₹99 added to your mobile bill</p>
+        <p>AED 19 added to your mobile bill</p>
       </div>
     )
   }
