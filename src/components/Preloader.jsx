@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { Gamepad2, Headphones, HeartPulse, Trophy } from 'lucide-react'
 
 const IMAGES = ['/eg1.jpg', '/eg2.jpg', '/eg3.jpg', '/eg4.jpg', '/eg5.jpg']
 const ACCENTS = [
@@ -10,10 +11,17 @@ const ACCENTS = [
 ]
 const WIPES = ['right', 'bottom', 'left', 'top']
 const RIBBON = ['Carrier Billing', 'HD Games', 'Video on Demand', 'Audio Books', 'Contests', 'Health & Fitness']
+const FEATURES = [
+  { id: 'audio', label: 'Audio Books', caption: 'Listen anywhere', Icon: Headphones, delay: 1.5 },
+  { id: 'games', label: 'HD Games', caption: 'Play instantly', Icon: Gamepad2, delay: 2 },
+  { id: 'health', label: 'Health & Fitness', caption: 'Stay active', Icon: HeartPulse, delay: 2.5 },
+  { id: 'contest', label: 'Contests', caption: 'Win rewards', Icon: Trophy, delay: 3 },
+]
 const STEP_MS = 650
 const STORY_MS = 7000
 const EXIT_MS = 900
 const TITLE = 'Products'
+const SUBTITLE = 'Direct Carrier Billing'
 
 const reducedMotion = () =>
   typeof window !== 'undefined' &&
@@ -30,6 +38,22 @@ function Ribbon({ className }) {
             <i>✦</i>
           </span>
         ))}
+      </div>
+    </div>
+  )
+}
+
+function FeatureBadge({ id, label, caption, Icon, delay }) {
+  return (
+    <div className={`dcb-feature dcb-feature--${id}`} style={{ animationDelay: `${delay}s` }}>
+      <div className="dcb-feature-chip">
+        <span className="dcb-feature-icon">
+          <Icon size={20} strokeWidth={2.2} />
+        </span>
+        <span className="dcb-feature-text">
+          <b>{label}</b>
+          <small>{caption}</small>
+        </span>
       </div>
     </div>
   )
@@ -115,10 +139,18 @@ export default function Preloader({ onDone }) {
         <Ribbon className="dcb-preloader-ribbon--front" />
       </div>
 
+      <div className="dcb-preloader-features" aria-hidden="true">
+        {FEATURES.map((feature) => (
+          <FeatureBadge key={feature.id} {...feature} />
+        ))}
+      </div>
+
       <img className="dcb-preloader-logo" src="/nservelogo.png" alt="nSERVE" />
 
       <div className="dcb-preloader-title" aria-hidden="true">
-        <span className="dcb-preloader-eyebrow">nSERVE DCB</span>
+        <p className="dcb-preloader-subheading" data-text={SUBTITLE}>
+          {SUBTITLE}
+        </p>
         <p className="dcb-preloader-heading" data-text={TITLE}>
           {TITLE.split('').map((ch, i) => (
             <span key={i} style={{ animationDelay: `${0.2 + i * 0.06}s` }}>
