@@ -12,14 +12,14 @@ const ACCENTS = [
 const WIPES = ['right', 'bottom', 'left', 'top']
 const RIBBON = ['Carrier Billing', 'HD Games', 'Video on Demand', 'Audio Books', 'Contests', 'Health & Fitness']
 const FEATURES = [
-  { id: 'audio', label: 'Audio Books', caption: 'Listen anywhere', Icon: Headphones, delay: 1.5 },
-  { id: 'games', label: 'HD Games', caption: 'Play instantly', Icon: Gamepad2, delay: 2 },
-  { id: 'health', label: 'Health & Fitness', caption: 'Stay active', Icon: HeartPulse, delay: 2.5 },
-  { id: 'contest', label: 'Contests', caption: 'Win rewards', Icon: Trophy, delay: 3 },
+  { id: 'audio', label: 'Audio Books', caption: 'Listen anywhere', Icon: Headphones, delay: 1.2 },
+  { id: 'games', label: 'HD Games', caption: 'Play instantly', Icon: Gamepad2, delay: 1.6 },
+  { id: 'health', label: 'Health & Fitness', caption: 'Stay active', Icon: HeartPulse, delay: 2 },
+  { id: 'contest', label: 'Contests', caption: 'Win rewards', Icon: Trophy, delay: 2.4 },
 ]
 const STEP_MS = 650
-const STORY_MS = 7000
-const EXIT_MS = 900
+const STORY_MS = 4300
+const EXIT_MS = 700
 const TITLE = 'Products'
 const SUBTITLE = 'Direct Carrier Billing'
 
