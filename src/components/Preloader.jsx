@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Gamepad2, Headphones, HeartPulse, Trophy } from 'lucide-react'
+import { Globe2, RadioTower } from 'lucide-react'
 
 const IMAGES = ['/eg1.jpg', '/eg2.jpg', '/eg3.jpg', '/eg4.jpg', '/eg5.jpg']
 const ACCENTS = [
@@ -11,12 +11,6 @@ const ACCENTS = [
 ]
 const WIPES = ['right', 'bottom', 'left', 'top']
 const RIBBON = ['Carrier Billing', 'HD Games', 'Video on Demand', 'Audio Books', 'Contests', 'Health & Fitness']
-const FEATURES = [
-  { id: 'audio', label: 'Audio Books', caption: 'Listen anywhere', Icon: Headphones, delay: 1.2 },
-  { id: 'games', label: 'HD Games', caption: 'Play instantly', Icon: Gamepad2, delay: 1.6 },
-  { id: 'health', label: 'Health & Fitness', caption: 'Stay active', Icon: HeartPulse, delay: 2 },
-  { id: 'contest', label: 'Contests', caption: 'Win rewards', Icon: Trophy, delay: 2.4 },
-]
 const STEP_MS = 650
 const STORY_MS = 4300
 const EXIT_MS = 700
@@ -43,18 +37,15 @@ function Ribbon({ className }) {
   )
 }
 
-function FeatureBadge({ id, label, caption, Icon, delay }) {
+function StatCard({ side, Icon, pre, value, label }) {
   return (
-    <div className={`dcb-feature dcb-feature--${id}`} style={{ animationDelay: `${delay}s` }}>
-      <div className="dcb-feature-chip">
-        <span className="dcb-feature-icon">
-          <Icon size={20} strokeWidth={2.2} />
-        </span>
-        <span className="dcb-feature-text">
-          <b>{label}</b>
-          <small>{caption}</small>
-        </span>
-      </div>
+    <div className={`dcb-stat dcb-stat--${side}`} aria-hidden="true">
+      <span className="dcb-stat-icon">
+        <Icon size={20} strokeWidth={2.2} />
+      </span>
+      {pre && <span className="dcb-stat-pre">{pre}</span>}
+      <strong className="dcb-stat-num">{value}</strong>
+      <span className="dcb-stat-label">{label}</span>
     </div>
   )
 }
@@ -139,11 +130,8 @@ export default function Preloader({ onDone }) {
         <Ribbon className="dcb-preloader-ribbon--front" />
       </div>
 
-      <div className="dcb-preloader-features" aria-hidden="true">
-        {FEATURES.map((feature) => (
-          <FeatureBadge key={feature.id} {...feature} />
-        ))}
-      </div>
+      <StatCard side="left" Icon={Globe2} pre="in over" value="22" label="Countries" />
+      <StatCard side="right" Icon={RadioTower} value="28" label="Telcos" />
 
       <img className="dcb-preloader-logo" src="/nservelogo.png" alt="nSERVE" />
 
