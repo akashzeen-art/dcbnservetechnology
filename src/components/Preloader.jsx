@@ -55,13 +55,29 @@ function StatCard({ side, Icon, pre, value, label }) {
 export default function Preloader({ onDone }) {
   const [tick, setTick] = useState(0)
   const [leaving, setLeaving] = useState(false)
+  const [onScreen, setOnScreen] = useState(() => document.visibilityState === 'visible')
   const barRef = useRef(null)
+
+  // Safari can load a page before it is shown (top-hit preloading, background tabs);
+  // the story must not start until then or it finishes unseen.
+  useEffect(() => {
+    if (onScreen) return
+    const onVisibility = () => {
+      if (document.visibilityState === 'visible') setOnScreen(true)
+    }
+    document.addEventListener('visibilitychange', onVisibility)
+    return () => document.removeEventListener('visibilitychange', onVisibility)
+  }, [onScreen])
 
   useEffect(() => {
     IMAGES.forEach((src) => {
       const img = new Image()
       img.src = src
     })
+  }, [])
+
+  useEffect(() => {
+    if (!onScreen) return
 
     const storyMs = reducedMotion() ? 2500 : STORY_MS
     const previousOverflow = document.body.style.overflow
@@ -93,7 +109,9 @@ export default function Preloader({ onDone }) {
       clearTimeout(done)
       document.body.style.overflow = previousOverflow
     }
-  }, [onDone])
+  }, [onDone, onScreen])
+
+  if (!onScreen) return <div className="dcb-preloader" aria-hidden="true" />
 
   const slides = tick === 0 ? [0] : [tick - 1, tick]
   const current = tick % IMAGES.length

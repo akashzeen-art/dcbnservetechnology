@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import ContentSection from './components/ContentSection.jsx'
 import DcbSection from './components/DcbSection.jsx'
 import Footer from './components/Footer.jsx'
@@ -11,6 +11,15 @@ import useScrollReveal from './hooks/useScrollReveal.js'
 export default function App() {
   const [booting, setBooting] = useState(true)
   const finishBoot = useCallback(() => setBooting(false), [])
+
+  // Pages restored from the back/forward cache keep their old state, so replay the preloader.
+  useEffect(() => {
+    const onPageShow = (event) => {
+      if (event.persisted) setBooting(true)
+    }
+    window.addEventListener('pageshow', onPageShow)
+    return () => window.removeEventListener('pageshow', onPageShow)
+  }, [])
 
   useScrollReveal()
 
