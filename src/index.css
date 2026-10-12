@@ -2519,6 +2519,8 @@ ol {
 /* Preloader */
 
 .dcb-preloader {
+  --strip: clamp(32px, 3vw, 42px);
+  --strip-font: clamp(12px, 1.1vw, 15px);
   position: fixed;
   inset: 0;
   z-index: 100;
@@ -2638,49 +2640,90 @@ ol {
 
 .dcb-preloader-ribbons {
   position: absolute;
-  top: 74%;
-  left: -10vw;
-  right: -10vw;
-  z-index: 9;
+  inset: 0;
+  z-index: 12;
   pointer-events: none;
-  animation: dcb-fade-up 0.8s var(--ease) 0.5s both;
 }
 
 .dcb-preloader-ribbon {
   position: absolute;
-  left: 0;
-  right: 0;
+  display: flex;
+  align-items: center;
+  height: var(--strip);
   overflow: hidden;
-  padding: 10px 0;
   white-space: nowrap;
   font-family: var(--font-display);
-  font-size: clamp(13px, 1.5vw, 18px);
+  font-size: var(--strip-font);
   font-weight: 800;
   letter-spacing: 0.16em;
   text-transform: uppercase;
+  box-shadow: 0 0 32px rgba(0, 0, 0, 0.35);
+  animation: dcb-strip-in 0.8s var(--ease) both;
 }
 
-.dcb-preloader-ribbon--front {
-  transform: rotate(-4deg);
+.dcb-preloader-ribbon--top,
+.dcb-preloader-ribbon--bottom {
+  left: 0;
+  right: 0;
   color: #fff;
   background: linear-gradient(90deg, var(--accent), var(--accent-2));
-  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.35);
   transition: background 0.6s ease;
 }
 
-.dcb-preloader-ribbon--back {
-  transform: rotate(3deg);
+.dcb-preloader-ribbon--top {
+  --strip-from: 0 calc(-1 * var(--strip));
+  top: 0;
+  animation-delay: 0.3s;
+}
+
+.dcb-preloader-ribbon--bottom {
+  --strip-from: 0 var(--strip);
+  bottom: 0;
+  animation-delay: 0.6s;
+}
+
+/* The side strips are horizontal strips turned on their end, so they need to be as long as the screen is tall. */
+.dcb-preloader-ribbon--left,
+.dcb-preloader-ribbon--right {
+  width: 100vh;
   color: var(--navy);
   background: rgba(255, 255, 255, 0.92);
+  transform-origin: 0 0;
+}
+
+.dcb-preloader-ribbon--left {
+  --strip-from: calc(-1 * var(--strip)) 0;
+  top: 100%;
+  left: 0;
+  rotate: -90deg;
+  animation-delay: 0.75s;
+}
+
+.dcb-preloader-ribbon--right {
+  --strip-from: var(--strip) 0;
+  top: 0;
+  left: 100%;
+  rotate: 90deg;
+  animation-delay: 0.45s;
 }
 
 .dcb-preloader-ribbon-track {
   display: inline-flex;
-  animation: dcb-marquee 9s linear infinite;
+  animation: dcb-marquee 16s linear infinite reverse;
 }
 
-.dcb-preloader-ribbon--back .dcb-preloader-ribbon-track {
-  animation-direction: reverse;
+/* Reversed tracks run towards the strip's reading end, so the frame flows clockwise. */
+.dcb-preloader-ribbon--right .dcb-preloader-ribbon-track {
+  animation-delay: -4s;
+}
+
+.dcb-preloader-ribbon--bottom .dcb-preloader-ribbon-track {
+  animation-direction: normal;
+  animation-delay: -8s;
+}
+
+.dcb-preloader-ribbon--left .dcb-preloader-ribbon-track {
+  animation-delay: -12s;
 }
 
 .dcb-preloader-ribbon-track span {
@@ -2697,8 +2740,8 @@ ol {
 
 .dcb-preloader-logo {
   position: absolute;
-  top: clamp(18px, 4vh, 32px);
-  left: clamp(18px, 4vw, 40px);
+  top: calc(var(--strip) + clamp(12px, 3vh, 26px));
+  left: calc(var(--strip) + clamp(12px, 3vw, 32px));
   z-index: 11;
   width: 56px;
   height: auto;
@@ -2816,9 +2859,9 @@ ol {
 
 .dcb-preloader-footer {
   position: absolute;
-  right: clamp(18px, 4vw, 40px);
-  bottom: clamp(22px, 5vh, 40px);
-  left: clamp(18px, 4vw, 40px);
+  right: calc(var(--strip) + clamp(12px, 3vw, 32px));
+  bottom: calc(var(--strip) + clamp(16px, 4vh, 32px));
+  left: calc(var(--strip) + clamp(12px, 3vw, 32px));
   z-index: 11;
   display: flex;
   align-items: center;
@@ -2846,9 +2889,9 @@ ol {
 
 .dcb-preloader-bar {
   position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  right: var(--strip);
+  bottom: var(--strip);
+  left: var(--strip);
   z-index: 11;
   height: 4px;
   background: rgba(255, 255, 255, 0.12);
@@ -2864,7 +2907,14 @@ ol {
 
 @keyframes dcb-marquee {
   to {
-    transform: translateX(-33.3333%);
+    transform: translateX(-25%);
+  }
+}
+
+@keyframes dcb-strip-in {
+  from {
+    opacity: 0;
+    translate: var(--strip-from);
   }
 }
 
@@ -2953,6 +3003,11 @@ ol {
 }
 
 @media (max-width: 640px) {
+  .dcb-preloader {
+    --strip: 28px;
+    --strip-font: 10px;
+  }
+
   .dcb-preloader-logo {
     width: 46px;
   }
@@ -2966,7 +3021,7 @@ ol {
 
 .dcb-stat {
   --tone: var(--accent);
-  --edge: clamp(12px, 3vw, 56px);
+  --edge: calc(var(--strip) + clamp(12px, 3vw, 48px));
   --from-y: calc(35vh - 50%);
   position: absolute;
   z-index: 9;
@@ -3088,7 +3143,7 @@ ol {
 
 @media (max-width: 640px) {
   .dcb-stat {
-    --edge: 5vw;
+    --edge: calc(var(--strip) + 3vw);
     --from-y: calc(28vh - 50%);
     top: 22%;
     width: 112px;

@@ -11,6 +11,8 @@ const ACCENTS = [
 ]
 const WIPES = ['right', 'bottom', 'left', 'top']
 const RIBBON = ['Carrier Billing', 'HD Games', 'Video on Demand', 'Audio Books', 'Contests', 'Health & Fitness']
+// Top and bottom come last so they sit over the corners where the side strips overlap them.
+const EDGES = ['left', 'right', 'top', 'bottom']
 const STEP_MS = 650
 const STORY_MS = 4300
 const EXIT_MS = 700
@@ -21,10 +23,10 @@ const reducedMotion = () =>
   typeof window !== 'undefined' &&
   window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-function Ribbon({ className }) {
-  const items = [...RIBBON, ...RIBBON, ...RIBBON]
+function Ribbon({ edge }) {
+  const items = [...RIBBON, ...RIBBON, ...RIBBON, ...RIBBON]
   return (
-    <div className={`dcb-preloader-ribbon ${className}`}>
+    <div className={`dcb-preloader-ribbon dcb-preloader-ribbon--${edge}`}>
       <div className="dcb-preloader-ribbon-track">
         {items.map((label, i) => (
           <span key={i}>
@@ -126,8 +128,9 @@ export default function Preloader({ onDone }) {
       <div className="dcb-preloader-glow dcb-preloader-glow--b" aria-hidden="true" />
 
       <div className="dcb-preloader-ribbons" aria-hidden="true">
-        <Ribbon className="dcb-preloader-ribbon--back" />
-        <Ribbon className="dcb-preloader-ribbon--front" />
+        {EDGES.map((edge) => (
+          <Ribbon key={edge} edge={edge} />
+        ))}
       </div>
 
       <StatCard side="left" Icon={Globe2} pre="in over" value="22" label="Countries" />
