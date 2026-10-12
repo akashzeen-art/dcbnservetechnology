@@ -3021,44 +3021,51 @@ ol {
 
 .dcb-stat {
   --tone: var(--accent);
-  --edge: calc(var(--strip) + clamp(12px, 3vw, 48px));
-  --from-y: calc(35vh - 50%);
+  /* Kept tight to the edge so the card clears the start and end of the giant "Products" heading. */
+  --edge: calc(var(--strip) + clamp(8px, 1.4vw, 32px));
+  --pop-delay: 0.9s;
   position: absolute;
-  z-index: 9;
-  top: 15%;
+  z-index: 11;
+  top: 50%;
+  translate: 0 -50%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: clamp(120px, 12vw, 190px);
+  width: clamp(120px, 11vw, 180px);
   padding: 18px 12px 16px;
   border-radius: 22px;
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  background: linear-gradient(160deg, rgba(15, 23, 42, 0.66), rgba(15, 23, 42, 0.3));
+  border: 1.5px solid color-mix(in srgb, var(--tone) 75%, #fff);
+  background: linear-gradient(160deg, rgba(10, 18, 36, 0.94), rgba(15, 23, 42, 0.86));
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   color: #fff;
   text-align: center;
   white-space: nowrap;
   box-shadow:
-    0 22px 48px rgba(0, 0, 0, 0.35),
-    0 0 44px color-mix(in srgb, var(--tone) 32%, transparent);
+    0 24px 54px rgba(0, 0, 0, 0.6),
+    0 0 0 4px color-mix(in srgb, var(--tone) 22%, transparent),
+    0 0 56px color-mix(in srgb, var(--tone) 55%, transparent);
   transition: border-color 0.6s ease, box-shadow 0.6s ease;
-  animation: dcb-stat-side-to-corner 1.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  /* The pulse is listed last so it takes over the transform once the pop-in has finished. */
+  animation:
+    dcb-stat-pop-in 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) var(--pop-delay) both,
+    dcb-stat-pulse 1.4s ease-in-out calc(var(--pop-delay) + 0.9s) infinite;
+}
+
+.dcb-preloader.is-leaving .dcb-stat {
+  animation: dcb-stat-pop-out 0.45s cubic-bezier(0.55, 0, 1, 0.45) both;
 }
 
 .dcb-stat--left {
-  --from-x: calc(-100% - var(--edge) - 24px);
   left: var(--edge);
   border-left: 4px solid var(--tone);
-  animation-delay: 0.9s;
 }
 
 .dcb-stat--right {
   --tone: var(--accent-2);
-  --from-x: calc(100% + var(--edge) + 24px);
+  --pop-delay: 1.3s;
   right: var(--edge);
   border-right: 4px solid var(--tone);
-  animation-delay: 1.2s;
 }
 
 .dcb-stat-icon {
@@ -3086,47 +3093,69 @@ ol {
   font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(255, 255, 255, 0.92);
 }
 
 .dcb-stat-num {
   font-family: var(--font-display);
-  font-size: clamp(40px, 4.4vw, 64px);
+  font-size: clamp(42px, 4.6vw, 68px);
   font-weight: 900;
   line-height: 1;
-  background: linear-gradient(135deg, #fff 35%, var(--tone));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: #fff;
+  text-shadow:
+    0 2px 0 rgba(0, 0, 0, 0.35),
+    0 0 22px color-mix(in srgb, var(--tone) 85%, transparent);
 }
 
 .dcb-stat-label {
-  margin-top: 2px;
+  margin-top: 4px;
   font-family: var(--font-display);
   font-size: clamp(13px, 1.2vw, 17px);
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
+  color: color-mix(in srgb, var(--tone) 55%, #fff);
 }
 
-@keyframes dcb-stat-side-to-corner {
+@keyframes dcb-stat-pop-in {
   from {
     opacity: 0;
-    transform: translate(var(--from-x), var(--from-y));
+    transform: scale(0.15);
+    filter: blur(10px);
   }
-  40% {
+  60% {
     opacity: 1;
-    transform: translate(0, var(--from-y));
+    transform: scale(1.18);
+    filter: blur(0);
   }
-  55% {
-    transform: translate(0, var(--from-y));
-  }
-  88% {
-    transform: translate(0, -6px);
+  80% {
+    transform: scale(0.94);
   }
   to {
     opacity: 1;
     transform: none;
+  }
+}
+
+@keyframes dcb-stat-pulse {
+  0%,
+  100% {
+    transform: none;
+  }
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+@keyframes dcb-stat-pop-out {
+  30% {
+    opacity: 1;
+    transform: scale(1.12);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.15);
+    filter: blur(8px);
   }
 }
 
@@ -3142,10 +3171,19 @@ ol {
 }
 
 @media (max-width: 640px) {
+  /* "Products" spans almost the full width at mid-height here, so the cards sit just above and below it. */
+  .dcb-stat--left {
+    top: calc(50% - 76px);
+    translate: 0 -100%;
+  }
+
+  .dcb-stat--right {
+    top: calc(50% + 76px);
+    translate: none;
+  }
+
   .dcb-stat {
     --edge: calc(var(--strip) + 3vw);
-    --from-y: calc(28vh - 50%);
-    top: 22%;
     width: 112px;
     padding: 12px 8px 10px;
     border-radius: 16px;
