@@ -801,6 +801,7 @@ ol {
 
 .intro-visual {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   place-items: center;
 }
 
@@ -1519,7 +1520,7 @@ ol {
 
 .library-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 10px;
   margin-top: 16px;
 }
@@ -2076,7 +2077,7 @@ ol {
 
 .dash-kpis {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(88px, 1fr));
   gap: 8px;
   margin-top: 18px;
 }
@@ -2410,7 +2411,7 @@ ol {
 @media (max-width: 960px) {
   .hero-inner,
   .intro {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .hero-copy {
